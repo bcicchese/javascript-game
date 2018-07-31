@@ -1,14 +1,12 @@
-/*
- * Create a list that holds all of your cards
- */
+//Create a list that holds all of your cards
+ var cardDeck = document.getElementsByClassName('card');
 
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+ /*
+  * Display the cards on the page
+  *   - shuffle the list of cards using the provided "shuffle" method below
+  *   - loop through each card and create its HTML
+  *   - add each card's HTML to the page
+  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -21,9 +19,36 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
+ }
+//use this function for when the page is first loaded or refreshed
+ function onLoad(){
+   shuffle(cardDeck)
+ }
+
+window.addEventListener('load', onload, false);
+
+function card_click(){
+  this.classList.toggle('open', 'show');
+ }
+
+ // var match = function() {
+ // 	if (font matches font) {
+ // 		do something
+ // 		call open deck function
+ // 	}else {
+ // 		flip cards over
+ // 	}
+ // }
+ //
+ // var open_deck = function() {
+ // 	do something
+ // }
+
+for(var i = 0; i < cardDeck.length; i++){
+  cardDeck[i].addEventListener('click', card_click);
 }
+
 
 
 /*
