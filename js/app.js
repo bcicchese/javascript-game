@@ -1,5 +1,5 @@
 //Create a list that holds all of your cards
- var cardDeck = document.getElementsByClassName('card');
+ const cardDeck =[...document.getElementsByClassName('card')];
 
  /*
   * Display the cards on the page
@@ -8,6 +8,14 @@
   *   - add each card's HTML to the page
   */
 
+var table = document.querySelector('.deck');
+
+  window.onload = function(){
+    var shuffledDeck = shuffle(cardDeck);
+    shuffledDeck.forEach(function(item) {
+      table.appendChild(item);
+    });
+  }
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -29,7 +37,7 @@ function shuffle(array) {
 window.addEventListener('load', onload, false);
 
 function card_click(){
-  this.classList.toggle('open', 'show');
+  this.classList.add('open', 'show');
  }
 
  // var match = function() {
