@@ -1,7 +1,9 @@
 //Create a list that holds all of your cards
 var cardDeck =[...document.getElementsByClassName('card')];
-var table = document.querySelector('.deck');
-var openCards = []
+var deck = document.querySelector('.deck');
+var stars = document.querySelector('.stars');
+let moves =document.querySelector('.moves');
+let openCards = []
 /*
 * Display the cards on the page
 *   - shuffle the list of cards
@@ -11,7 +13,7 @@ var openCards = []
 window.onload = function(){
   var shuffledDeck = shuffle(cardDeck);
   shuffledDeck.forEach(function(item) {
-    table.appendChild(item);
+    deck.appendChild(item);
   });
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -30,29 +32,45 @@ function shuffle(array) {
 
 window.addEventListener('load', onload, false);
 
-function card_click(){
-  this.classList.add('open', 'show');
+function card_click(e){
+  e.classList.toggle('open');
+  e.classList.toggle('show');
   }
 
-function addToOpen(){
-  openCards.push(this);
+function addToOpen(e){
+  openCards.push(e);
+  if (openCards.length === 2){
+    match();
+  }
 }
 
-
-for(var i = 0; i < cardDeck.length; i++){
-  cardDeck[i].addEventListener('click', card_click);
-  cardDeck[i].addEventListener('click', addToOpen);
+function match(){
+  //make sure cards stay flipped over
+  //add css animation
+  if(openCards[0].innerHTML === openCards[1].innerHTML){
+    openCards[0].classList.toggle('match');
+    openCards[1].classList.toggle('match');
+    openCards =[];
+  }else{
+    //noMatch();
+    alert("no matchy")
   }
+}
 
+function noMatch(){
+  //add css animation
+  //flip cards back over
+  //openCards = []
+}
 
-// var match = function() {
-// 	if (font matches font) {
-// 		do something
-// 		call open deck function
-// 	}else {
-// 		flip cards over
-// 	}
-// }
+deck.addEventListener('click', function(event){
+  const e = event.target;
+  if(e.classList.contains('card') && openCards.length < 2){
+    card_click(e);
+    addToOpen(e);
+  }
+}, false);
+
 
 /*
 * set up the event listener for a card. If a card is clicked:
