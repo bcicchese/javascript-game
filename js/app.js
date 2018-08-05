@@ -2,7 +2,8 @@
 var cardDeck =[...document.getElementsByClassName('card')];
 var deck = document.querySelector('.deck');
 var stars = document.querySelector('.stars');
-let moves =document.querySelector('.moves');
+let moves = document.querySelector('.moves');
+let counter = 0;
 let openCards = []
 /*
 * Display the cards on the page
@@ -30,9 +31,9 @@ function shuffle(array) {
   return array;
 }
 
-window.addEventListener('load', onload, false);
+//window.addEventListener('load', onload, false); don't think needed
 
-function card_click(e){
+function changeClass(e){
   e.classList.toggle('open');
   e.classList.toggle('show');
   }
@@ -50,23 +51,22 @@ function match(){
   if(openCards[0].innerHTML === openCards[1].innerHTML){
     openCards[0].classList.toggle('match');
     openCards[1].classList.toggle('match');
-    openCards =[];
+    openCards = [];
   }else{
-    //noMatch();
-    alert("no matchy")
+    noMatch();
   }
 }
 
 function noMatch(){
   //add css animation
-  //flip cards back over
-  //openCards = []
+openCards.forEach(changeClass);
+openCards = []
 }
 
 deck.addEventListener('click', function(event){
   const e = event.target;
   if(e.classList.contains('card') && openCards.length < 2){
-    card_click(e);
+    changeClass(e);
     addToOpen(e);
   }
 }, false);
