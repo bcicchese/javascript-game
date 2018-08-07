@@ -1,5 +1,6 @@
 //Create a list that holds all of your cards
 var cardDeck =[...document.getElementsByClassName('card')];
+//create variables for needed elements
 var deck = document.querySelector('.deck');
 var stars = document.querySelector('.stars');
 let moves = document.querySelector('.moves');
@@ -31,8 +32,6 @@ function shuffle(array) {
   return array;
 }
 
-//window.addEventListener('load', onload, false); don't think needed
-
 function changeClass(e){
   e.classList.toggle('open');
   e.classList.toggle('show');
@@ -45,27 +44,44 @@ function addToOpen(e){
   }
 }
 
+function bounce(e) {
+  e.classList.toggle('bounce');
+}
+
+function shake(e) {
+  e.classList.add('shake');
+}
+
+function spin(e) {
+  //all cards spin upon winning
+}
 function match(){
-  //make sure cards stay flipped over
-  //add css animation
   if(openCards[0].innerHTML === openCards[1].innerHTML){
     openCards[0].classList.toggle('match');
     openCards[1].classList.toggle('match');
+    //openCards.forEach(bounce);
+    counter++;
     openCards = [];
   }else{
-    noMatch();
+    setTimeout(() => {
+      noMatch();
+    }, 1000);
   }
 }
 
 function noMatch(){
-  //add css animation
-openCards.forEach(changeClass);
-openCards = []
+  openCards.forEach(changeClass);
+  //openCards.forEach(shake);
+  counter++;
+  openCards = []
 }
 
 deck.addEventListener('click', function(event){
   const e = event.target;
-  if(e.classList.contains('card') && openCards.length < 2){
+  if(e.classList.contains('card')
+  && openCards.length < 2
+  && !openCards.includes(e)
+  && !e.classList.contains('match')){
     changeClass(e);
     addToOpen(e);
   }
