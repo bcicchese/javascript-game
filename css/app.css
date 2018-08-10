@@ -151,7 +151,12 @@ h1 {
     cursor: pointer;
 }
 
-/* The Modal (background) */
+#timer {
+  display: inline-block;
+  padding-left: 4rem;
+}
+
+/* The Modal Background */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -165,7 +170,7 @@ h1 {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-/* Modal Content/Box */
+/* Modal Content*/
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */

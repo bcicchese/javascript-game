@@ -2,22 +2,35 @@
 var cardDeck =[...document.getElementsByClassName('card')];
 //create variables for needed elements
 var deck = document.querySelector('.deck');
-var stars = document.querySelector('.stars');
+var stars = [...document.getElementsByClassName('fa-star')];
 let moves = document.querySelector('.moves');
+let restart = document.querySelector('.restart');
 let counter = 0;
-let openCards = []
+let time = 0;
+let timer;
+let timerStatus = 1;
+let matchedCards = 0;
+let openCards = [];
+
 /*
 * Display the cards on the page
 *   - shuffle the list of cards
 *   - loop through each card and create its HTML
 *   - add each card's HTML to the page
 */
-window.onload = function(){
+document.onload = startGame()
+
+function startGame() {
   var shuffledDeck = shuffle(cardDeck);
   shuffledDeck.forEach(function(item) {
     deck.appendChild(item);
   });
+  if(timerStatus === 1){
+    startTimer();
+    timerStatus = 0;
+  }
 }
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -32,6 +45,7 @@ function shuffle(array) {
   return array;
 }
 
+//functions called from event listener
 function changeClass(e){
   e.classList.toggle('open');
   e.classList.toggle('show');
@@ -44,6 +58,30 @@ function addToOpen(e){
   }
 }
 
+//called from addToOpen
+function match(){
+  if(openCards[0].innerHTML === openCards[1].innerHTML){
+    openCards[0].classList.toggle('match');
+    openCards[1].classList.toggle('match');
+    //openCards.forEach(bounce);
+    changeMoves();
+    matchedCards++;
+    openCards = [];
+  }else{
+    setTimeout(() => {
+      noMatch();
+    }, 800);
+  }
+}
+
+function noMatch(){
+  openCards.forEach(changeClass);
+  //openCards.forEach(shake);
+  changeMoves();
+  openCards = []
+}
+
+//CSS Animations
 function bounce(e) {
   e.classList.toggle('bounce');
 }
@@ -55,26 +93,61 @@ function shake(e) {
 function spin(e) {
   //all cards spin upon winning
 }
-function match(){
-  if(openCards[0].innerHTML === openCards[1].innerHTML){
-    openCards[0].classList.toggle('match');
-    openCards[1].classList.toggle('match');
-    //openCards.forEach(bounce);
-    counter++;
-    openCards = [];
-  }else{
-    setTimeout(() => {
-      noMatch();
-    }, 1000);
+
+function changeMoves(){
+  counter++
+  moves.innerHTML = counter;
+  switch(true){
+    case (counter === 9):
+      if(stars[0].classList.contains('fa-star')) {
+          stars[0].classList.add('fa-star-o')
+      };
+    break;
+    case (counter === 15):
+    if(stars[1].classList.contains('fa-star')) {
+        stars[1].classList.add('fa-star-o')
+    };
+    break;
+    case (counter >= 20):
+    if(stars[0].classList.contains('fa-star')) {
+        stars[0].classList.add('fa-star-o')
+    };
+      break;
   }
 }
 
-function noMatch(){
-  openCards.forEach(changeClass);
-  //openCards.forEach(shake);
-  counter++;
-  openCards = []
+function endGame(){
+  if(matchedCards === 8) {
+    modal.style.display = "block";
+    stopTimer();
+  }
 }
+
+//timer
+
+function startTimer() {
+  timer = setInterval(function(){
+    time++;
+    let min = Math.floor(time/100/60);
+    let sec = Math.floor(time/100);
+    if(min < 10) {
+      min = "0" + min;
+    }
+    if(sec >= 60) {
+      sec = sec % 60;
+    }
+    if(sec < 10) {
+      sec = "0" + sec;
+    }
+    document.getElementById('timer').innerHTML = `${min}:${sec}`;
+  }, 10);
+}
+
+function stopTimer() {
+  clearInterval(timer);
+}
+
+restart.addEventListener('click', startGame);
 
 deck.addEventListener('click', function(event){
   const e = event.target;
@@ -84,22 +157,15 @@ deck.addEventListener('click', function(event){
   && !e.classList.contains('match')){
     changeClass(e);
     addToOpen(e);
+    endGame();
   }
 }, false);
 
 // Get the modal
 var modal = document.getElementById('myModal');
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-    modal.style.display = "block";
-}
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
@@ -113,8 +179,8 @@ window.onclick = function(event) {
     }
 }
 
-
 /*
+*General Instructions
 * set up the event listener for a card. If a card is clicked:
 *  - display the card's symbol (put this functionality in another function that you call from this one)
 *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
