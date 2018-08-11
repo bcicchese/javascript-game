@@ -9,28 +9,21 @@ let replay = document.getElementById('replayBtn');
 let counter = 0;
 let time = 0;
 let timer;
-let timerStatus = 1;
 let matchedCards = 0;
 let openCards = [];
-
 /*
 * Display the cards on the page
 *   - shuffle the list of cards
 *   - loop through each card and create its HTML
 *   - add each card's HTML to the page
 */
-window.onload = startGame()
-
-function startGame() {
+window.onload = function startGame() {
   var shuffledDeck = shuffle(cardDeck);
   shuffledDeck.forEach(function(item) {
     deck.appendChild(item);
   });
-  if(timerStatus === 1){
     startTimer();
-    timerStatus = 0;
   }
-}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -64,7 +57,7 @@ function match(){
   if(openCards[0].innerHTML === openCards[1].innerHTML){
     openCards[0].classList.toggle('match');
     openCards[1].classList.toggle('match');
-    //openCards.forEach(bounce);
+    openCards.forEach(bounce);
     changeMoves();
     matchedCards++;
     openCards = [];
@@ -77,18 +70,24 @@ function match(){
 
 function noMatch(){
   openCards.forEach(changeClass);
-  //openCards.forEach(shake);
+  openCards.forEach(shake);
   changeMoves();
   openCards = []
 }
 
 //CSS Animations
 function bounce(e) {
-  e.classList.toggle('bounce');
+  e.classList.add('bounce');
+  setTimeout(() => {
+    e.classList.remove('bounce');
+  }, 1000)
 }
 
 function shake(e) {
   e.classList.add('shake');
+  setTimeout(() => {
+    e.classList.remove('shake');
+  }, 1000)
 }
 
 function spin(e) {
@@ -110,8 +109,8 @@ function changeMoves(){
     };
     break;
     case (counter >= 20):
-    if(stars[0].classList.contains('fa-star')) {
-      stars[0].classList.add('fa-star-o')
+    if(stars[2].classList.contains('fa-star')) {
+      stars[2].classList.add('fa-star-o')
     };
     break;
   }
@@ -147,6 +146,7 @@ function startTimer() {
   }, 10);
 }
 
+//if user clicks on restart or replay button (in modal), the game reloads
 restart.addEventListener('click', function() {
   location.reload();
 })
@@ -167,12 +167,12 @@ deck.addEventListener('click', function(event){
   }
 }, false);
 
-// Get the modal
-var modal = document.getElementById('myModal');
+//modal stuff
+let modal = document.getElementById('myModal');
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+let closeBtn = document.getElementsByClassName("close")[0];
 
+//fills in the modal with appropriate information
 function inputStats() {
   const stoppedTimer = document.getElementById('timer').innerHTML;
   const stars = document.querySelector('.stars').innerHTML;
@@ -181,12 +181,12 @@ function inputStats() {
   document.querySelector('.modal-stars').innerHTML = `Stars: ${stars}`;
 }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+//closes the modal
+closeBtn.onclick = function() {
   modal.style.display = "none";
 }
 
-  // When the user clicks anywhere outside of the modal, close it
+  //closes the modal if you click anywhere outside of the modal
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
