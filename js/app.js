@@ -1,8 +1,8 @@
 //Create a list that holds all of your cards
-var cardDeck =[...document.getElementsByClassName('card')];
+let cardDeck =[...document.getElementsByClassName('card')];
 //create variables for needed elements
-var deck = document.querySelector('.deck');
-var stars = [...document.getElementsByClassName('fa-star')];
+let deck = document.querySelector('.deck');
+let stars = [...document.getElementsByClassName('fa-star')];
 let moves = document.querySelector('.moves');
 let restart = document.querySelector('.restart');
 let replay = document.getElementById('replayBtn');
@@ -18,7 +18,7 @@ let openCards = [];
 *   - add each card's HTML to the page
 */
 window.onload = function startGame() {
-  var shuffledDeck = shuffle(cardDeck);
+  let shuffledDeck = shuffle(cardDeck);
   shuffledDeck.forEach(function(item) {
     deck.appendChild(item);
   });
@@ -64,7 +64,7 @@ function match(){
   }else{
     setTimeout(() => {
       noMatch();
-    }, 800);
+    }, 1000);
   }
 }
 
@@ -192,15 +192,3 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
-
-  /*
-  *General Instructions
-  * set up the event listener for a card. If a card is clicked:
-  *  - display the card's symbol (put this functionality in another function that you call from this one)
-  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
-  *  - if the list already has another card, check to see if the two cards match
-  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
-  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
-  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
-  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
-  */
