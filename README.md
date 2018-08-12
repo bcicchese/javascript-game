@@ -1,20 +1,30 @@
-# Memory Game Project
+# Memory Game
 
 ## Table of Contents
 
+* [About](#about)
+* [Built With](#built with)
 * [Instructions](#instructions)
 * [Contributing](#contributing)
 
+## About
+
+Given some static project code in HTML and CSS, I created an interactive memory game by adding some JavaScript and tweaking the existing code. You play by trying to match all 8 pairs of cards. Players are timed as well as given a star rating based on how many moves it takes them to finish the game.
+
+## Built With
+
+HTML, CSS, and JavaScript.
+* [Font Awesome](https://fontawesome.com)
+* [Google Fonts](https://fonts.google.com/)
+
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+Download the files to your computer and open the index.html file in your browser of choice.
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+Javascript done by  **Brittany Cicchese** - [bcicchese](https://github.com/bcicchese)
+
+Starter code provided to all Udacity students in the Front-End Web Developer Nanodegree program.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).

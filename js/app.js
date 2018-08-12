@@ -98,19 +98,14 @@ function changeMoves(){
   counter++
   moves.innerHTML = counter;
   switch(true){
-    case (counter === 9):
+    case (counter === 11):
     if(stars[0].classList.contains('fa-star')) {
       stars[0].classList.add('fa-star-o')
     };
     break;
-    case (counter === 15):
+    case (counter === 18):
     if(stars[1].classList.contains('fa-star')) {
       stars[1].classList.add('fa-star-o')
-    };
-    break;
-    case (counter >= 20):
-    if(stars[2].classList.contains('fa-star')) {
-      stars[2].classList.add('fa-star-o')
     };
     break;
   }
